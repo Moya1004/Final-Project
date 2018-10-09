@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://ws.calc/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="Calculate" targetNamespace="http://ws.calc/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="CalculatePortBindingPolicy" />
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://localhost:8080/FinalYearProject/Calculate?xsd=1" namespace="http://ws.calc/" />
+    </xsd:schema>
+  </types>
+  <message name="hello">
+    <part name="parameters" element="tns:hello" />
+  </message>
+  <message name="helloResponse">
+    <part name="parameters" element="tns:helloResponse" />
+  </message>
+  <message name="ReadFile">
+    <part name="parameters" element="tns:ReadFile" />
+  </message>
+  <message name="ReadFileResponse">
+    <part name="parameters" element="tns:ReadFileResponse" />
+  </message>
+  <message name="CalculateClass">
+    <part name="parameters" element="tns:CalculateClass" />
+  </message>
+  <message name="CalculateClassResponse">
+    <part name="parameters" element="tns:CalculateClassResponse" />
+  </message>
+  <message name="ClassNotFoundException">
+    <part name="fault" element="tns:ClassNotFoundException" />
+  </message>
+  <message name="IOException">
+    <part name="fault" element="tns:IOException" />
+  </message>
+  <message name="JSONException">
+    <part name="fault" element="tns:JSONException" />
+  </message>
+  <message name="workWithJar">
+    <part name="parameters" element="tns:workWithJar" />
+  </message>
+  <message name="workWithJarResponse">
+    <part name="parameters" element="tns:workWithJarResponse" />
+  </message>
+  <message name="addition">
+    <part name="parameters" element="tns:addition" />
+  </message>
+  <message name="additionResponse">
+    <part name="parameters" element="tns:additionResponse" />
+  </message>
+  <portType name="Calculate">
+    <operation name="hello">
+      <input wsam:Action="http://ws.calc/Calculate/helloRequest" message="tns:hello" />
+      <output wsam:Action="http://ws.calc/Calculate/helloResponse" message="tns:helloResponse" />
+    </operation>
+    <operation name="ReadFile">
+      <input wsam:Action="http://ws.calc/Calculate/ReadFileRequest" message="tns:ReadFile" />
+      <output wsam:Action="http://ws.calc/Calculate/ReadFileResponse" message="tns:ReadFileResponse" />
+    </operation>
+    <operation name="CalculateClass">
+      <input wsam:Action="http://ws.calc/Calculate/CalculateClassRequest" message="tns:CalculateClass" />
+      <output wsam:Action="http://ws.calc/Calculate/CalculateClassResponse" message="tns:CalculateClassResponse" />
+      <fault wsam:Action="http://ws.calc/Calculate/CalculateClass/Fault/ClassNotFoundException" name="ClassNotFoundException" message="tns:ClassNotFoundException" />
+      <fault wsam:Action="http://ws.calc/Calculate/CalculateClass/Fault/IOException" name="IOException" message="tns:IOException" />
+      <fault wsam:Action="http://ws.calc/Calculate/CalculateClass/Fault/JSONException" name="JSONException" message="tns:JSONException" />
+    </operation>
+    <operation name="workWithJar">
+      <input wsam:Action="http://ws.calc/Calculate/workWithJarRequest" message="tns:workWithJar" />
+      <output wsam:Action="http://ws.calc/Calculate/workWithJarResponse" message="tns:workWithJarResponse" />
+    </operation>
+    <operation name="addition">
+      <input wsam:Action="http://ws.calc/Calculate/additionRequest" message="tns:addition" />
+      <output wsam:Action="http://ws.calc/Calculate/additionResponse" message="tns:additionResponse" />
+    </operation>
+  </portType>
+  <binding name="CalculatePortBinding" type="tns:Calculate">
+    <wsp:PolicyReference URI="#CalculatePortBindingPolicy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="hello">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ReadFile">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="CalculateClass">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="ClassNotFoundException">
+        <soap:fault use="literal" name="ClassNotFoundException" namespace="" />
+      </fault>
+      <fault name="IOException">
+        <soap:fault use="literal" name="IOException" namespace="" />
+      </fault>
+      <fault name="JSONException">
+        <soap:fault use="literal" name="JSONException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="workWithJar">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="addition">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Calculate">
+    <port name="CalculatePort" binding="tns:CalculatePortBinding">
+      <soap:address location="http://localhost:8080/FinalYearProject/Calculate" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,40 @@
+﻿@{
+    //List<string> filePaths = ViewBag.result;
+    ViewBag.Title = "Home";
+}
+
+
+
+@*<iframe height="1000" width="1000" src="/Home/ShowFile?filePath=C:/Users/Moya/Desktop/pdp_odev/Car.java"></iframe>*@
+
+
+
+<!-- Download Section -->
+<section id="download" class="download-section content-section text-center">
+    <div class="container">
+        <div class="container">
+            <div class="starter-template">
+                <h3>Upload Project</h3>
+            </div>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <!--<label for="exampleInputFile">File input</label>-->
+                    <input id="filePosted"name="filePosted" type="file" accept=".zip, .jar">
+                    <!--<p class="help-block">Example block-level help text here.</p>-->
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            }
+
+            <div>
+                <div>@ViewBag.Result</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $('input[type="file"]').prettyFile();
+</script>

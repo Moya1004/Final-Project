@@ -1,0 +1,64 @@
+﻿body {
+    font-family: 'Lora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: #F8F8F8;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    margin: 0 0 35px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 25px;
+}
+
+.download-section {
+    color: white;
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 200px 0;
+    margin-top: 40px;
+    text-align: center;
+    background: url("images/background-image-for-website-4.jpg") no-repeat bottom center scroll;
+    background-color: black;
+    background-size: cover;
+}
+footer {
+    padding: 50px 0;
+}
+
+    footer p {
+        font-size: 14px;
+        margin: 0;
+        color:black;
+        text-align:center;
+    }
+
+    table th {
+        color:darkblue;
+        font-weight:bolder;
+        font-family:'Microsoft PhagsPa',Calibri;
+        font-size:large;
+    }
+
+

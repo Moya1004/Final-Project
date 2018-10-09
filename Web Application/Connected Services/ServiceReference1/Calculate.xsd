@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://ws.calc/" targetNamespace="http://ws.calc/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CalculateClass" type="tns:CalculateClass" />
+  <xs:element name="CalculateClassResponse" type="tns:CalculateClassResponse" />
+  <xs:element name="ClassNotFoundException" type="tns:ClassNotFoundException" />
+  <xs:element name="IOException" type="tns:IOException" />
+  <xs:element name="JSONException" type="tns:JSONException" />
+  <xs:element name="ReadFile" type="tns:ReadFile" />
+  <xs:element name="ReadFileResponse" type="tns:ReadFileResponse" />
+  <xs:element name="addition" type="tns:addition" />
+  <xs:element name="additionResponse" type="tns:additionResponse" />
+  <xs:element name="hello" type="tns:hello" />
+  <xs:element name="helloResponse" type="tns:helloResponse" />
+  <xs:element name="workWithJar" type="tns:workWithJar" />
+  <xs:element name="workWithJarResponse" type="tns:workWithJarResponse" />
+  <xs:complexType name="CalculateClass">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fileName" type="xs:string" />
+      <xs:element minOccurs="0" name="fileArray" nillable="true" type="xs:base64Binary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CalculateClassResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClassNotFoundException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="exception" type="tns:throwable" />
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="throwable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="stackTrace" nillable="true" type="tns:stackTraceElement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="stackTraceElement" final="extension restriction">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="IOException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="JSONException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReadFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fileName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReadFileResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addition">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="x" type="xs:double" />
+      <xs:element minOccurs="0" name="y" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="additionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="workWithJar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="workWithJarResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hello">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="helloResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

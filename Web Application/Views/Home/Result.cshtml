@@ -1,0 +1,147 @@
+﻿@model List<WebApplication1.Models.ResponseModel>
+
+@{
+    List<WebApplication1.Models.ResponseModel> myModel = new List<WebApplication1.Models.ResponseModel>();
+    if (Model == null)
+    {
+        var xxxx = Session["Response"];
+        myModel = (List<WebApplication1.Models.ResponseModel>)Session["Response"];
+    }
+    else {
+        var xxxx = Session["Response"];
+        myModel = Model;
+    }
+
+    int capacity = myModel != null ? myModel.Capacity : 0;
+    ViewBag.Title = "Result " + capacity;
+    double[] percentages = new double[capacity + 1];
+    string[] ids = new string[capacity + 1];
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    int totalNumberOfMethods = 0;
+    int totalNumberOfTests = 0;
+    int totalPercentage = 0;
+    int numberOfTestClasses = 0;
+}
+
+
+<!-- Download Section -->
+<section id="download" class="download-section content-section text-center">
+    <div class="container">
+        <div class="container">
+            <div>
+                <table id="mytable" class="table table-light row-border table-hover table-striped table-bordered" style="width:100%;color:black;border-color:darkblue;">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">File Name</th>
+                            <th scope="col"># Of Methods</th>
+                            <th scope="col"># Of Tests Written</th>
+                            <th scope="col">Test Class Name</th>
+                            <th scope="col">Secureness Percentage</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int i = 0;}
+                        @if (myModel != null)
+                        {
+                            foreach (var item in myModel)
+                            {
+                                if (item.methods.Length != 0)
+                                {
+                                    percentages[i] = ((double)item.NumberOfTestsWritten / item.methods.Length) * 100;//((double)item.NumberOfTestsWritten / (item.NumberOfMethods)) * 100;
+
+                                }
+                                else
+                                {
+                                    percentages[i] = -1;
+                                }
+                                ids[i] = "detail" + i;
+                                totalNumberOfMethods += item.methods.Length;
+                                totalNumberOfTests += item.NumberOfTestsWritten;
+                                numberOfTestClasses += String.IsNullOrEmpty(item.testClassName) ? 0 : 1;
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@item.fileName</td>
+                                    <td>@item.methods.Length</td>
+                                    @{ string id = "detail" + i;}
+                                    <td>@item.NumberOfTestsWritten</td>
+                                    <td>@item.testClassName</td>
+                                    <td id="@id">
+                                        @percentages[i]%
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <button style="font-weight:bold;" type="button" onclick="showModal('@item.fileName')" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
+                                                Click For Details
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                        @{ percentages[i] = ((double)totalNumberOfTests / totalNumberOfMethods) * 100;
+                            ids[i] = "detail" + i;
+                        }
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>Project's Overall</td>
+                            <td>@totalNumberOfMethods</td>
+                            @{string generalId = "detail" + i;}
+                            <td>@totalNumberOfTests</td>
+                            <td>@numberOfTestClasses</td>
+                            <td id="@generalId">@percentages[i]</td>
+                            <td id="@generalId">xxx</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Content/datatables.min.js"></script>
+<link href="~/Content/datatables.min.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function (){
+        $("#mytable").dataTable();
+        $(".dataTables_info").css('color','white');
+        $(".dataTables_length").css('color','white');
+        $(".dataTables_paginate").css('color','white');
+        $(".dataTables_filter").css('color','white');
+        $(".dataTables_wrapper").css('color','white');
+         
+        var per = @Html.Raw(Json.Encode(percentages));
+        var idss = @Html.Raw(Json.Encode(ids));
+        getGreenToRed(idss,per, @percentages.Length);
+        function getGreenToRed(yourJavaScriptArray, percent, length) {
+            for (i = 0; i < length; i++) {
+                if (percent[i] < 0)
+                    continue;
+                r = percent[i] < 50 ? 255 : Math.floor(255 - (percent[i] * 2 - 100) * 255 / 100);
+                g = percent[i] > 50 ? 255 : Math.floor((percent[i] * 2) * 255 / 100);
+                $("#"+idss[i]).css({ "background-color": "rgb(" + r + ", " + g + ", 0, 0.8)", "color": "black" });
+            }
+        }
+    });
+    function showModal(className)
+    {
+        $("#iframeModalBox").attr('src','/Home/Details?name='+className);
+        $("#exampleModal").show();
+    }
+</script>
+
+<style>
+    .table td {
+        border: black solid 1px !important;
+    }
+    .table th {
+        border: black solid 1px !important;
+    }
+    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+        background-color: grey;
+    }
+</style>

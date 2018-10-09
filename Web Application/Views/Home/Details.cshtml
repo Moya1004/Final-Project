@@ -1,0 +1,135 @@
+﻿@model WebApplication1.Models.ResponseModel
+@{
+    ViewBag.Title = "Details";
+    Layout = null;
+    string methodStructure = "";
+    string annotations = "";
+}
+
+<div class="container">
+    <h4 class="mybar" id="className">Class Name</h4>
+    <div id="classNameContainer">
+        <ul>
+            <li>@Model.fileName</li>
+        </ul>
+    </div>
+
+    <h4 class="mybar" id="testClassName">Test Class Name</h4>
+    <div id="testClassNameContainer">
+        <ul>
+            @if (!String.IsNullOrEmpty(Model.testClassName))
+            {
+                <li>@Model.testClassName</li>
+            }
+            else
+            {
+                <li>No Test Class Detected</li>
+            }
+        </ul>
+    </div>
+    <h4 class="mybar" id="methods">Methods</h4>
+    <div id="methodsContainer">
+        <ul>
+            @foreach (var item in Model.methods)
+            {
+                if (item == null)
+                {
+                    break;
+                }
+                {
+                    foreach (var item2 in item.annoationTypes)
+                    {
+                        annotations += item2 + "\n";
+                    }
+                    methodStructure = item.returnType + "  " + item.methodName + "(";
+                    int i = 0;
+                    foreach (var param in item.parameters)
+                    {
+                        methodStructure += param + " arg" + i + ", ";
+                        i++;
+                    }
+                    methodStructure = methodStructure.Substring(0, i == 0 ? methodStructure.Length : methodStructure.Length - 2);
+                    methodStructure += ")";
+                }
+                <li>@annotations @methodStructure</li>
+            }
+        </ul>
+    </div>
+    <h4 class="mybar" id="classVariables">Class Variables</h4>
+    <div id="variablesContainer">
+        <ul>
+            @if (Model.variables == null || Model.variables.Length < 1)
+            {
+                <li>No Class Variables Detected</li>
+            }
+            else
+            {
+                foreach (var item in Model.variables)
+                {
+                    if (item == null)
+                    {
+                        break;
+                    }
+                    methodStructure = item.modifier + "  " + item.type + "  " + item.name;
+                    <li>@methodStructure</li>
+                }
+            }
+
+        </ul>
+    </div>
+
+    <h4 class="mybar" id="testResults">Test Results</h4>
+    <div id="testResultsContainer">
+        <ul>
+            <li>Total Number Of Methods: @Model.methods.Length</li>
+            <li>Number Of Tests Writter: @Model.NumberOfTestsWritten</li>
+            <li>Test Result Success Ratio: @Model.successRate %</li>
+            @if (Model.failureMessages != null && Model.failureMessages.Count() > 0)
+            {
+                <h3 style="background-color:darkseagreen; padding: 5px;display:inline-block;">Test Result Failure Messages</h3>
+                <ul>
+                    @foreach (var item in Model.failureMessages)
+                    {
+                        <li style="color:red;">
+                            @item
+                        </li>
+                    }
+                </ul>
+            }
+
+        </ul>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#methods").on('click',function()
+        {
+            $("#methodsContainer").toggle();
+        })
+
+        $("#className").on('click', function () {
+            $("#classNameContainer").toggle();
+        })
+
+        $("#testClassName").on('click', function () {
+            $("#testClassNameContainer").toggle();
+        })
+
+        $("#classVariables").on('click', function () {
+            $("#variablesContainer").toggle();
+        })
+
+        $("#testResults").on('click', function () {
+            $("#testResultsContainer").toggle();
+        })
+    });
+</script>
+<style>
+    .mybar {
+        width: 100%;
+        background-color: cornflowerblue;
+        padding: 10px;
+    }
+</style>
+
